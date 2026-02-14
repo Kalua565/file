@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 🎉</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+font-family:'Poppins',sans-serif;
+overflow:hidden;
+color:white;
+perspective:1200px;
+}
+
+body::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background-image:linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+background-size:40px 40px;
+}
+
+.btn{
+padding:14px 34px;
+border:none;
+border-radius:40px;
+font-weight:600;
+cursor:pointer;
+color:white;
+background:linear-gradient(45deg,#ff0080,#ff4ecd);
+box-shadow:0 0 20px rgba(255,0,150,0.5);
+transition:0.3s ease;
+margin-top:20px;
+}
+.btn:hover{transform:scale(1.08);}
+
+.container{text-align:center;}
+.main-text{
+font-family:'Pacifico',cursive;
+font-size:36px;
+background:linear-gradient(90deg,#ff4ecd,#ff77ff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:15px;
+}
+
+/* Cake */
+.cake-wrapper{
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+.cake{
+position:relative;
+width:240px;
+height:150px;
+margin-top:40px;
+transition:1s ease;
+}
+
+.layer{
+position:absolute;
+bottom:0;
+width:240px;
+height:90px;
+background:linear-gradient(to bottom,#5b2c06,#3b1e06);
+border-radius:50%/25%;
+}
+
+.top{
+position:absolute;
+top:0;
+width:240px;
+height:80px;
+background:#fff;
+border-radius:50%;
+}
+
+.drip{
+position:absolute;
+top:40px;
+width:35px;
+height:50px;
+background:#fff;
+border-radius:20px;
+}
+.d1{left:30px;}
+.d2{left:100px;height:60px;}
+.d3{left:170px;}
+
+.candle{
+position:absolute;
+top:-45px;
+left:50%;
+transform:translateX(-50%);
+width:12px;
+height:45px;
+background:red;
+border-radius:3px;
+}
+
+.flame{
+position:absolute;
+top:-22px;
+left:50%;
+transform:translateX(-50%);
+width:16px;
+height:24px;
+background:radial-gradient(circle,#fff176,#ff9800,#ff5722);
+border-radius:50%;
+opacity:0;
+animation:flicker 0.2s infinite alternate;
+}
+
+.cut{
+transform:rotateY(30deg) translateX(60px);
+}
+
+.message{
+font-family:'Pacifico',cursive;
+font-size:30px;
+margin-top:25px;
+background:linear-gradient(90deg,#ff4ecd,#ffffff,#ff4ecd);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+/* Diary */
+.diary{
+width:260px;
+height:180px;
+background:#6b3e26;
+border-radius:8px;
+box-shadow:0 10px 25px rgba(0,0,0,0.5);
+margin-top:30px;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+transition:1s;
+transform-origin:left;
+}
+
+.diary-title{
+position:absolute;
+top:10px;
+width:100%;
+text-align:center;
+font-weight:bold;
+color:#fff;
+}
+
+.diary.open{
+transform:rotateY(-160deg);
+}
+
+.page{
+position:absolute;
+width:260px;
+height:180px;
+background:#fffaf0;
+color:#333;
+padding:20px;
+border-radius:8px;
+display:none;
+}
+
+.confetti{
+position:absolute;
+width:8px;
+height:8px;
+animation:fall 3s linear infinite;
+}
+
+@keyframes flicker{
+from{transform:translateX(-50%) scale(1);}
+to{transform:translateX(-50%) scale(1.15);}
+}
+
+@keyframes fall{
+0%{transform:translateY(-100vh);}
+100%{transform:translateY(100vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="content">
+<h1 class="main-text">
+A Cutiepie was born today,<br>17 years ago!
+</h1>
+<button class="btn" onclick="showCake()">🎁 Start the surprise</button>
+</div>
+
+<script>
+
+function showCake(){
+document.getElementById("content").innerHTML=`
+<div class="cake-wrapper">
+<div class="cake" id="cake">
+<div class="candle">
+<div class="flame" id="flame"></div>
+</div>
+<div class="top"></div>
+<div class="layer"></div>
+<div class="drip d1"></div>
+<div class="drip d2"></div>
+<div class="drip d3"></div>
+</div>
+<button class="btn" onclick="lightCandle(this)">🕯 Light Candle</button>
+</div>
+`;
+}
+
+function lightCandle(btn){
+document.getElementById("flame").style.opacity="1";
+btn.innerText="💨 Blow Candle";
+btn.onclick=function(){blowCandle(btn);}
+}
+
+function blowCandle(btn){
+document.getElementById("flame").style.opacity="0";
+btn.remove();
+
+let msg=document.createElement("div");
+msg.className="message";
+msg.innerText="Happy Birthday to you dear Shama ✨";
+document.querySelector(".cake-wrapper").appendChild(msg);
+
+let cutBtn=document.createElement("button");
+cutBtn.innerText="🍰 Cut Cake";
+cutBtn.className="btn";
+cutBtn.onclick=cutCake;
+document.querySelector(".cake-wrapper").appendChild(cutBtn);
+}
+
+function cutCake(){
+let cake=document.getElementById("cake");
+cake.classList.add("cut");
+launchConfetti();
+setTimeout(showDiary,1500);
+}
+
+function showDiary(){
+let wrapper=document.querySelector(".cake-wrapper");
+wrapper.innerHTML+=`
+<div class="diary" id="diary">
+<div class="diary-title">A Note From Amir</div>
+</div>
+<button class="btn" onclick="openDiary()">📖 Open Diary</button>
+<div class="page" id="page">
+Dear Shama,<br><br>
+You are the most special person in my life.  
+May your smile always shine brighter than candles.  
+Happy Birthday once again ❤️
+</div>
+`;
+}
+
+function openDiary(){
+document.getElementById("diary").classList.add("open");
+document.getElementById("page").style.display="block";
+}
+
+function launchConfetti(){
+for(let i=0;i<60;i++){
+let conf=document.createElement("div");
+conf.className="confetti";
+conf.style.left=Math.random()*100+"vw";
+conf.style.backgroundColor=`hsl(${Math.random()*360},100%,50%)`;
+conf.style.animationDuration=(2+Math.random()*2)+"s";
+document.body.appendChild(conf);
+setTimeout(()=>conf.remove(),3000);
+}
+}
+
+</script>
+
+</body>
+</html>
